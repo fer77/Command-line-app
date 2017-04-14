@@ -1,0 +1,25 @@
+#! /usr/bin/env php
+
+<?php
+
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Input\InputArgument;
+
+require 'vendor/autoload.php';
+
+$app = new Application('Laracasts Demo', '1.0'); //* Changes the default 'Console Tool'
+
+//* Register a new command:
+$app->register('sayHelloTo')
+    ->setDescription('Offers a greeting to a given person.')
+    ->addArgument('name', InputArgument::OPTIONAL, 'Your name.') //* can be OPTIONAL or REQUIRED.
+    //* This is all coming from the console component.
+    ->setCode(function(InputInterface $input, OutputInterface $output)
+    {
+      $message = 'Hello, ' . $input->getArgument('name');
+      $output->writeln("<info>{$message}</info>"); //* Can be wrapped in HTML like tags <comment> and <info>...to add styles.
+    });
+
+$app->run();
